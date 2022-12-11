@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      name: gateway #此處要對應在githun上面的名稱
+      profile: dev #此處要對應在githun上面的名稱
+      label: main
+      auto-refresh: true #
+      refresh-interval: 30

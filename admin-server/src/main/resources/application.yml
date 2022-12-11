@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: admin-service
+server:
+  port: 9301
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8888/eureka
+  instance:
+    prefer-ip-address: true      

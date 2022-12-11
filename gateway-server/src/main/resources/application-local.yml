@@ -1,0 +1,61 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 9001
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #讓GateWay開啟服務註冊與發現的功能，意即是動態路由。
+          lower-case-service-id: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+            - GET
+            - POST
+            - DELETE
+            - PUT
+            - OPTIONS
+      routes:
+      - id: concert-service
+        uri: lb://concert-service
+        predicates:
+        - Path=/**
+      - id: information-service
+        uri: lb://information-service
+        predicates:
+        - Path=/**
+      - id: member-service
+        uri: lb://member-service
+        predicates:
+        - Path=/**
+      - id: transaction-service
+        uri: lb://transaction-service
+        predicates:
+        - Path=/**     
+    config:
+      enabled: false
+  main:
+    allow-bean-definition-overriding: true
+eureka:
+  client:
+    register-with-eureka: true #作為客戶端註冊到eruka
+    fetch-registry: true #從eureka中獲取註冊資訊
+    service-url: #客戶端註冊地址
+      defaultZone: http://127.0.0.1:8888/eureka
+  instance:
+    prefer-ip-address: true #優先使用該服務的IP地址註冊到Eureka      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always      
